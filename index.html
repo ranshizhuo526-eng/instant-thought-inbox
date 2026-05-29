@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f3ea" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="思维收集箱" />
+  <meta name="description" content="离线 iPad PWA：即时记录、分类、手写、打勾、顺延和每日壁纸。" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>即时思维收集箱</title>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow" id="todayLabel">今天</p>
+        <h1>即时思维收集箱</h1>
+        <p class="subtitle">把突然冒出的想法、实验步骤、学习点和生活杂事先收住。</p>
+      </div>
+      <div class="status-card">
+        <span>今日未完成</span>
+        <strong id="openCount">0</strong>
+        <small id="offlineStatus">离线可用</small>
+      </div>
+    </header>
+
+    <section class="card composer">
+      <div class="row gap wrap">
+        <label class="field grow">
+          <span>打字记录</span>
+          <textarea id="textInput" rows="3" placeholder="马上记：实验流程、实验学习、生活、德国……"></textarea>
+        </label>
+        <label class="field small">
+          <span>分类</span>
+          <select id="categoryInput">
+            <option>实验流程</option>
+            <option>实验学习</option>
+            <option>生活</option>
+            <option>德国</option>
+          </select>
+        </label>
+      </div>
+      <div class="row gap wrap">
+        <button class="primary" id="addTextBtn">添加文字记录</button>
+        <button id="clearTextBtn">清空输入</button>
+      </div>
+
+      <details class="handwriting-panel">
+        <summary>手写 / Apple Pencil 记录</summary>
+        <div class="canvas-tools">
+          <select id="handCategoryInput">
+            <option>实验流程</option>
+            <option>实验学习</option>
+            <option>生活</option>
+            <option>德国</option>
+          </select>
+          <button id="saveDrawingBtn">保存手写</button>
+          <button id="clearCanvasBtn">清空画布</button>
+        </div>
+        <canvas id="drawCanvas" width="1200" height="520"></canvas>
+      </details>
+    </section>
+
+    <section class="card toolbar">
+      <div class="chips" id="filterChips"></div>
+      <div class="backup-actions">
+        <button id="exportBtn">导出 JSON 备份</button>
+        <label class="import-label">导入备份<input id="importInput" type="file" accept="application/json" /></label>
+      </div>
+    </section>
+
+    <section class="grid-two">
+      <section class="card list-card">
+        <div class="section-head"><div><h2>今日未完成</h2><p>没打勾的会自动顺延到今天。</p></div><span class="pill" id="openPill">0 条</span></div>
+        <div id="openList" class="note-list"></div>
+      </section>
+      <section class="card list-card">
+        <div class="section-head"><div><h2>今天新增</h2><p>今天记下的所有内容。</p></div><span class="pill" id="todayPill">0 条</span></div>
+        <div id="todayList" class="note-list"></div>
+      </section>
+    </section>
+
+    <section class="card list-card">
+      <div class="section-head"><div><h2>全部记录</h2><p>按分类筛选后查看完整收集箱。</p></div><span class="pill" id="allPill">0 条</span></div>
+      <div id="allList" class="note-list"></div>
+    </section>
+
+    <section class="card wallpaper-card">
+      <div class="section-head"><div><h2>每日计划壁纸</h2><p>生成图片后保存或分享，再手动/用快捷指令设为 iPad 壁纸。</p></div></div>
+      <div class="wallpaper-actions">
+        <button class="primary" id="makeWallpaperBtn">生成今日壁纸</button>
+        <button id="downloadPortraitBtn">下载竖屏</button>
+        <button id="downloadLandscapeBtn">下载横屏</button>
+        <button id="shareWallpaperBtn">分享竖屏</button>
+      </div>
+      <div class="wallpaper-preview-wrap"><canvas id="wallpaperCanvas" width="1290" height="2796"></canvas></div>
+      <details class="howto"><summary>如何设为 iPad 壁纸</summary><ol><li>点下载按钮保存图片。</li><li>打开 iPad 设置 → 墙纸 → 添加新墙纸，选择图片。</li><li>想每日自动化，可在快捷指令里创建每天固定时间运行的自动化。</li></ol></details>
+    </section>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
